@@ -1,5 +1,4 @@
 
-/*created by prashant shukla */
 
 var paddle2 =10,paddle1=10;
 
@@ -23,6 +22,14 @@ var ball = {
 
 function setup(){
   var canvas =  createCanvas(700,600);
+  canvas.parent('canvas');
+
+  vidoe = createCapture(VIDEO);
+    video.size(700,600);
+    video.hide();
+
+    poseNet = ml5.posenet(video, modelLoaded);
+    poseNet.on('pose', gotPoses);
 }
 
 
@@ -162,4 +169,19 @@ function paddleInCanvas(){
   if(mouseY < 0){
     mouseY =0;
   }  
+}
+
+function modelLoaded() {
+  console.log('PoseNet Is Initialized');
+}
+
+function gotPoses(results)
+{
+  if(results.lenght > 0)
+  {
+    rightWristY = results[0].pose.rightWrist.y;
+    rightWristX = results[0].pose.rightWrist.x;
+    scoreRightWrist = results[0].pose.keypoints[10].score;
+    console.log(scoreRightWrist);
+  }
 }
