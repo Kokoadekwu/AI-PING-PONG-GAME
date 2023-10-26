@@ -74,7 +74,23 @@ function draw(){
     move();
 }
 
+function preload() {
+	world_start = loadSound("ball_touch_paddle.wav");
+	setSprites();
+	PINGPONGANIMATION();
+}
 
+function setup() {
+	canvas = createCanvas(1240,336);
+	canvas.parent('canvas');
+
+
+	instializeInSetup(mario);
+}
+
+function draw() {
+	game()
+}
 
 //function reset when ball does notcame in the contact of padde
 function reset(){
